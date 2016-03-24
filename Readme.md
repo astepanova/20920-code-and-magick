@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Анна Степанова](https://up.htmlacademy.ru/javascript/4/user/20920).
-* Наставник: `Неизвестно`.
+* Наставник: `Дмитрий Ермаков`.
 
 ---
 
