@@ -1,6 +1,6 @@
-function getMessage(a, b) {
+﻿function getMessage(a, b) {
 
-  if (typeof a == 'boolean') {
+  if (typeof a === 'boolean') {
 
     if (a == true) {
       return ( 'Я попал в ' + b );
@@ -9,13 +9,13 @@ function getMessage(a, b) {
 
   }
 
-  if (typeof a == 'number') {
+  if (typeof a === 'number') {
     return ( 'Я прыгнул на ' + a * 100 + ' сантиметров' );
   }
 
-  if (a.constructor === Array) {
+  if (Array.isArray(a)) {
 
-    if (( b ) && (b.constructor === Array)) {
+    if (Array.isArray(b)) {
       var s = 0;
       for (var i = 0; i < a.length; i++) {
         s += a[i] * b[i];
