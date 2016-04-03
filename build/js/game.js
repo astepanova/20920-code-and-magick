@@ -409,10 +409,12 @@
       var words = text.split(' ');
       var countWords = words.length;
       var line = '';
-      var maxWidth = 300;
+      var maxWidth = 280;
       var lineHeight = 20;
-      var marginLeft = 85;
-      var marginTop = 80;
+      var marginLeft = 65;
+      var marginTop = 75;
+      this.ctx.font = '16px PT Mono';
+      this.ctx.fillStyle = '#000';
       for (var n = 0; n < countWords; n++) {
         var testLine = line + words[n] + ' ';
         var testWidth = this.ctx.measureText(testLine).width;
@@ -424,8 +426,6 @@
           line = testLine;
         }
       }
-      this.ctx.font = '16px PT Mono';
-      this.ctx.fillStyle = '#000';
       this.ctx.fillText(line, marginLeft, marginTop);
     },
 
