@@ -375,21 +375,78 @@
     },
 
     /**
+     * Отрисовка окна с сообщением.
+     */
+    _showMessage: function(text) {
+
+      // Тень от белого блока.
+      this.ctx.fillStyle = 'rgba(0,0,0,0.7)';
+      this.ctx.beginPath();
+      this.ctx.moveTo(60, 60);
+      this.ctx.lineTo(360, 60);
+      this.ctx.lineTo(360, 160);
+      this.ctx.lineTo(180, 160);
+      this.ctx.lineTo(120, 190);
+      this.ctx.lineTo(120, 160);
+      this.ctx.lineTo(60, 160);
+      this.ctx.closePath();
+      this.ctx.fill();
+
+      // Белый блок.
+      this.ctx.fillStyle = '#fff';
+      this.ctx.beginPath();
+      this.ctx.moveTo(50, 50);
+      this.ctx.lineTo(350, 50);
+      this.ctx.lineTo(350, 150);
+      this.ctx.lineTo(170, 150);
+      this.ctx.lineTo(110, 180);
+      this.ctx.lineTo(110, 150);
+      this.ctx.lineTo(50, 150);
+      this.ctx.closePath();
+      this.ctx.fill();
+
+      // Длина строчки подстраивается под ширину блока.
+      var words = text.split(' ');
+      var countWords = words.length;
+      var line = '';
+      var maxWidth = 300;
+      var lineHeight = 20;
+      var marginLeft = 85;
+      var marginTop = 80;
+      for (var n = 0; n < countWords; n++) {
+        var testLine = line + words[n] + ' ';
+        var testWidth = this.ctx.measureText(testLine).width;
+        if (testWidth > maxWidth) {
+          this.ctx.fillText(line, marginLeft, marginTop);
+          line = words[n] + ' ';
+          marginTop += lineHeight;
+        }
+        else {
+          line = testLine;
+        }
+      }
+      this.ctx.font = '16px PT Mono';
+      this.ctx.fillStyle = '#000';
+      this.ctx.fillText(line, marginLeft, marginTop);
+    },
+
+    /**
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          this._showMessage('Ура, победа! Возьми с полки пирожок!');
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          this._showMessage('В этот раз не повезло.. Нажмите пробел, чтобы начать заново.');
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          this._showMessage('Игра поставлена на паузу. Чтобы продолжить, нажмите пробел!');
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          this._showMessage('Я умею перемещаться и летать по нажатию на стрелки. ' +
+            'А если нажать шифт, я выстрелю файрболом.');
           break;
       }
     },
