@@ -1,8 +1,10 @@
-﻿function getMessage(a, b) {
+﻿'use strict';
+
+function getMessage(a, b) {
 
   if (typeof a === 'boolean') {
 
-    if (a == true) {
+    if (a === true) {
       return ( 'Я попал в ' + b );
     }
     return ( 'Я никуда не попал' );
