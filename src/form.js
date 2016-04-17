@@ -47,9 +47,12 @@
       if (text.value === '') {
         validForm = false;
         hintText.style.visibility = 'visible';
+      } else {
+        hintText.style.visibility = 'hidden';
       }
     } else {
       text.required = false;
+      hintText.style.visibility = 'hidden';
     }
     // Поведение кнопки и общего блока с подказками
     if (validForm === false) {
@@ -58,7 +61,6 @@
     } else {
       document.querySelector('.review-submit').disabled = false;
       hintField.style.visibility = 'hidden';
-      hintText.style.visibility = 'hidden';
     }
   }
 
