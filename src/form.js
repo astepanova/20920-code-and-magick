@@ -15,8 +15,9 @@
     formContainer.classList.add('invisible');
   };
 
-
-  var rating = document.getElementsByName('review-mark');
+  var browserCookies = require('browser-cookies');
+  var form = document.querySelector('.review-form');
+  var rating = form.elements['review-mark'];
   var name = document.querySelector('#review-name');
   var text = document.querySelector('#review-text');
   var hintField = document.querySelector('.review-fields');
@@ -34,15 +35,8 @@
     } else {
       hintName.style.visibility = 'hidden';
     }
-    // Получение значения оценки
-    for(var i = 0; i < rating.length; i++) {
-      if (rating[i].checked) {
-        var b = rating[i].value;
-        break;
-      }
-    }
     // Проверка значения оценки и поведение поля с отзывом
-    if (b < 3) {
+    if (rating.value < 3) {
       text.required = true;
       if (text.value === '') {
         validForm = false;
@@ -55,12 +49,12 @@
       hintText.style.visibility = 'hidden';
     }
     // Поведение кнопки и общего блока с подказками
-    if (validForm === false) {
-      document.querySelector('.review-submit').disabled = true;
-      hintField.style.visibility = 'visible';
-    } else {
+    if (validForm === true) {
       document.querySelector('.review-submit').disabled = false;
       hintField.style.visibility = 'hidden';
+    } else {
+      document.querySelector('.review-submit').disabled = true;
+      hintField.style.visibility = 'visible';
     }
   }
 
@@ -72,6 +66,26 @@
   };
   text.oninput = function() {
     validateForm();
+  };
+
+  // Cookies
+  name.value = browserCookies.get('name') || '';
+  rating.value = browserCookies.get('rating') || 3;
+  var today = new Date();
+  var birthday = new Date(today.getFullYear(), 8, 30);
+  if (today < birthday) {
+    birthday.setFullYear(birthday.getFullYear() - 1);
+  }
+  form.onsubmit = function(evt) {
+    evt.preventDefault();
+
+    browserCookies.set('name', name.value, {
+      expires: (today) - (birthday)
+    });
+    browserCookies.set('rating', rating.value, {
+      expires: (today) - (birthday)
+    });
+    this.submit();
   };
 })();
 
