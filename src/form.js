@@ -76,14 +76,16 @@
   if (today < birthday) {
     birthday.setFullYear(birthday.getFullYear() - 1);
   }
+  var cookieLifespan = today.getTime() - birthday.getTime();
+  var cookieExpirationDate = new Date(today.getTime() + cookieLifespan);
   form.onsubmit = function(evt) {
     evt.preventDefault();
 
     browserCookies.set('name', name.value, {
-      expires: (today) - (birthday)
+      expires: cookieExpirationDate
     });
     browserCookies.set('rating', rating.value, {
-      expires: (today) - (birthday)
+      expires: cookieExpirationDate
     });
     this.submit();
   };
