@@ -1,6 +1,6 @@
 'use strict';
-var filter = document.querySelector('.reviews-filter');
-filter.classList.add('invisible');
+var reviewsFilter = document.querySelector('.reviews-filter');
+reviewsFilter.classList.add('invisible');
 var reviewsContainer = document.querySelector('.reviews-list');
 var templateElement = document.getElementById('review-template');
 var reviews = [];
@@ -55,7 +55,7 @@ var getReviews = function(callback) {
   reviewsSection.classList.add('reviews-list-loading');
   xhr.onload = function(evt) {
     reviewsSection.classList.remove('reviews-list-loading');
-    filter.classList.remove('invisible');
+    reviewsFilter.classList.remove('invisible');
     var loadedData = JSON.parse(evt.target.response);
     callback(loadedData);
   };
@@ -72,16 +72,16 @@ var getReviews = function(callback) {
   xhr.send();
 };
 // Создание локальной переменной
-var renderReviews = function(reviews) {
+var renderReviews = function(reviewsToRender) {
   reviewsContainer.innerHTML = '';
-  reviews.forEach(function(review) {
+  reviewsToRender.forEach(function(review) {
     getReviewElement(review, reviewsContainer);
   });
 };
 
 // Фильтрация
-var getFilteredReviews = function(reviews, filter) {
-  var reviewsToFilter = reviews.slice(0);
+var getFilteredReviews = function(reviewsList, filter) {
+  var reviewsToFilter = reviewsList.slice(0);
 
   switch (filter) {
     case Filter.RECENT:
@@ -123,7 +123,6 @@ var setFilterEnabled = function(filter) {
 
 // Подключение фильтров
 var setFiltrationEnabled = function() {
-  var reviewsFilter = document.querySelector('.reviews-filter');
   var filters = reviewsFilter.elements['reviews'];
   for (var i = 0; i < filters.length; i++) {
     filters[i].onclick = function() {
